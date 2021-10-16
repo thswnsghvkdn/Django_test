@@ -1,0 +1,57 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>Document</title>
+</head>
+<body>
+    <div className="App">
+      <div class="container">
+        <header >
+          <div >
+          <!-- html에 없는 기능 템플릿 코드로 -->
+            {% if user.is_authenticated %}
+             <button type="button" ><a href="/logout">Logout</a></button> 
+
+            {% else %}
+            <button type="button" ><a href="/login">Login</a></button> 
+            <button type="button" ><a href="/join">Sign up</a></button>
+            {% endif %}
+          </div>
+        </header>
+      </div>
+      <table border="1" width="600px">
+        <colgroup>
+          <col width="10%" />
+          <col width="80%" />
+        </colgroup>
+        <tr>
+          <th scope="col">작성자</th>
+          <th scope="col">제목</th>
+        </tr>
+        <tr>
+          <td>철수</td>
+          <td>안녕하세요</td>
+        </tr>
+        {% for data in contents %}
+        <tr>
+          <td>{{data.username}}</td>
+          <td><a href ="/update/{{data.id}}">{{data.title}}</a></td>
+          <td><a href="{% url 'delete' pk=data.id %}">delete</td>
+          <td>
+            <form method = "post" action = "{% url 'delete' pk=data.id %}">
+              {% csrf_token %}
+              <button>삭제하기</button>
+            </form>
+          </td>
+        </tr>
+        {% endfor %}
+      </table>
+      {% if user.is_authenticated %}
+      <div >
+        <button type="button" ><a href="/write">글작성</a></button>
+      </div>
+      {% endif %}
+    </div>
+</body>
+</html>
