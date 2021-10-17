@@ -1,3 +1,4 @@
+from django.http.response import JsonResponse
 from django.shortcuts import get_object_or_404, render , redirect
 from django.contrib.auth.models import User
 from django.contrib import auth
@@ -28,6 +29,9 @@ def home(request) :
     return render(request , 'frontend/notice.html' , {'contents' : contents})
 
 def login(request) :
+    # 로그인검사 
+    u = request.user # 없으면 익명으로 뜸
+    
     if request.method=="POST":
         name = request.POST['username']
         pw = request.POST['password']
@@ -42,9 +46,11 @@ def login(request) :
         else : 
             auth.login(request , user) # 로그인 후 마이페이지를 보여주거나 함 역할 머야 .. 
             return redirect("/")
-    else :
-        return render(request , "frontend/login.html")
-
+    else : # 로그인 되어 있는지 검사
+        if str(u) == "AnonymousUser": 
+            return render(request , "frontend/login.html")
+        else : # 로그인 되어 있으면 로그인 페이지 접근 못함
+            return redirect("/")
 
 def logout(request):
     auth.logout(request)
@@ -94,7 +100,7 @@ def write_image(request):
         c = request.POST["board"]
         u = request.user.username # 유저네임 저장
         i = request.FILES["images"]
-        Notice3.objects.create(title=c , content = c , username = u , images = i) # 모델생성
+        Notice3.objects.create(title=t , content = c , username = u , images = i) # 모델생성
         return redirect("/homeImage")
     else : 
         u = request.user.username
@@ -109,3 +115,5 @@ def delete_image(request, pk):
     if request.method == "POST" :
         Notice3.objects.get(pk=pk).delete()
         return redirect("/homeImage")
+
+
