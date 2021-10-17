@@ -15,7 +15,7 @@ class Notice3(models.Model):
     title = models.CharField(max_length=500 , null=True)
     content = models.CharField(max_length = 500 , null = True)
     username = models.CharField(max_length=500 , null = True)
-    images = models.ImageField(null=True , blank=True , upload_to = "images") # 파일저장할때 blank True 필요
+    images = models.ImageField(null=True , blank=True , upload_to = "images") # 파일저장할때 blank True 필요 upload_to 에 저장
 
 
     def __str__(self):

@@ -13,5 +13,6 @@ urlpatterns = [
     path('homeImage/', views.home_image, name="homeImage"),
     path('writeImage/', views.write_image, name="writeImage"),
     path('deleteImage/<int:pk>', views.delete_image , name="deleteImage"), #name join 은 그냥 안해도 됨
+    path('jsondata/', views.index_view ),
     path('', views.home, name="home")
 ]
