@@ -35,7 +35,7 @@
         {% for data in contents %}
         <tr>
           <td>{{data.username}}</td>
-          <td><a href ="/update/{{data.id}}">{{data.title}}</a></td>
+          <td><a href ="/detail/{{data.id}}">{{data.title}}</a></td>
           <td>
             <form method = "post" action = "{% url 'deleteImage' pk=data.id %}">
               {% csrf_token %}
@@ -48,6 +48,7 @@
       {% if user.is_authenticated %}
       <div >
         <button type="button" ><a href="/write">글작성</a></button>
+        <button type="button" ><a href="/writeImage">이미지작성</a></button>
       </div>
       {% endif %}
     </div>

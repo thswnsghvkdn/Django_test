@@ -10,3 +10,13 @@ class Notice(models.Model):
 
     def __str__(self):
         return self.title # key 값 설정
+
+class Notice3(models.Model):
+    title = models.CharField(max_length=500 , null=True)
+    content = models.CharField(max_length = 500 , null = True)
+    username = models.CharField(max_length=500 , null = True)
+    images = models.ImageField(null=True , blank=True , upload_to = "images") # 파일저장할때 blank True 필요
+
+
+    def __str__(self):
+        return self.title # key 값 설정

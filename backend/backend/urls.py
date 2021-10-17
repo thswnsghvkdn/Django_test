@@ -14,8 +14,21 @@ Including another URLconf
     2. Add a URL to urlpatterns:  path('blog/', include('blog.urls'))
 """
 from django.contrib import admin
+<<<<<<< HEAD
 from django.urls import path
 
 urlpatterns = [
     path('admin/', admin.site.urls),
 ]
+=======
+from django.urls import path , include
+from django.conf.urls.static import static
+from django.conf import settings
+
+urlpatterns = [
+    path('admin/', admin.site.urls),
+    path('' , include('app.urls')),
+] + static(settings.MEDIA_URL , document_root = settings.MEDIA_ROOT) # 장고에서 제공해주는 static() 함수 공용으로 쓰이는 인수를 global선언 
+# static 의 상대주소를 사용할 수 있게 해줌
+
+>>>>>>> 3f374b8... 이미지 추가
