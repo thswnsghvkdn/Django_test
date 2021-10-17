@@ -116,4 +116,25 @@ def delete_image(request, pk):
         Notice3.objects.get(pk=pk).delete()
         return redirect("/homeImage")
 
+# json 응답
+def jsonDictionary(Notice):
+    # 딕셔너리 만들기
+    data = {}
+    data["title"] = Notice.title
+    data["content"] = Notice.content
+    data["username"] = Notice.username
+    return data
+
+# json 응답
+def index_view():
+    notice = Notice.objects.all()
+    data = []
+
+    for i in range(len(notice)) :
+        data.append(jsonDictionary(notice[i]))
+    notice = data
+
+    jsonDump =  {"notice" : notice}
+    return JsonResponse(jsonDump)
+
 
