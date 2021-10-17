@@ -1,7 +1,7 @@
 from django.shortcuts import get_object_or_404, render , redirect
 from django.contrib.auth.models import User
 from django.contrib import auth
-from .models import Notice
+from .models import Notice , Notice3
 
 # Create your views here.
 def join(request):
@@ -19,7 +19,12 @@ def join(request):
 
 
 def home(request) :
-    contents = Notice.objects.filter()
+    contents = Notice.objects.filter() # 전체를 다 가져오는 방법1
+    # contents = Notice.objects.all() # 전체를 다 가져오는 방법2
+    # Notice.objects.filter( title = "2" )
+    # contents = Notice.objects.exclude( username = "a") a 만 제외
+    # contents = Notice.objects.all()[:3] 3개만 출력
+    # contents = Notice.objcets.filter(username = "b").order_by("title")[:3]
     return render(request , 'frontend/notice.html' , {'contents' : contents})
 
 def login(request) :
@@ -72,3 +77,35 @@ def delete(request, pk):
     if request.method == "POST" :
         Notice.objects.get(pk=pk).delete()
     return redirect("/")
+
+
+def home_image(request) :
+    contents = Notice3.objects.filter() # 전체를 다 가져오는 방법1
+    # contents = Notice.objects.all() # 전체를 다 가져오는 방법2
+    # Notice.objects.filter( title = "2" )
+    # contents = Notice.objects.exclude( username = "a") a 만 제외
+    # contents = Notice.objects.all()[:3] 3개만 출력
+    # contents = Notice.objcets.filter(username = "b").order_by("title")[:3]
+    return render(request , 'frontend/notice_image.html' , {'contents' : contents})
+
+def write_image(request):
+    if request.method == "POST" :
+        t = request.POST["title"]
+        c = request.POST["board"]
+        u = request.user.username # 유저네임 저장
+        i = request.FILES["images"]
+        Notice3.objects.create(title=c , content = c , username = u , images = i) # 모델생성
+        return redirect("/homeImage")
+    else : 
+        u = request.user.username
+        return render(request , "frontend/writer_image.html" , {"username" : u })
+
+
+def update_image(request , pk):
+    contents = get_object_or_404(Notice3 , pk=pk)
+    return render(request , "frontend/update_image.html" , {"contents" : contents} )
+
+def delete_image(request, pk):
+    if request.method == "POST" :
+        Notice3.objects.get(pk=pk).delete()
+        return redirect("/homeImage")

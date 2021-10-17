@@ -118,4 +118,7 @@ USE_TZ = True
 # Static files (CSS, JavaScript, Images)
 # https://docs.djangoproject.com/en/3.0/howto/static-files/
 
-STATIC_URL = '/static/'
+STATIC_URL = '/static/' # 공통적으로 적용하는 정적 파일 css , js 
+MEDIA_URL = '/media/' 
+MEDIA_ROOT = os.path.join(BASE_DIR , 'media') # 기본주소와 media url을 연결
+
